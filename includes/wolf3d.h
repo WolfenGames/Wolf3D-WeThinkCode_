@@ -57,10 +57,12 @@ typedef struct			s_wolf
 	t_winfo				wi;
 }						t_wolf;
 
+void					new_image(t_wolf *w);
 void					load_file(char *f, t_wolf *w);
 
 int						key_press_hook(int key, t_wolf *w);
 int						exit_hook(int but, t_wolf *w);
 int						draw_back(t_wolf *w);
+
 
 #endif

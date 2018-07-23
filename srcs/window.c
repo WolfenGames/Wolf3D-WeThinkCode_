@@ -21,13 +21,19 @@ void	set_hooks(t_wolf *w)
 
 int		expose(t_wolf *w)
 {
+	new_image(w);
 	draw_back(w);
+	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
+	mlx_destroy_image(w->mlx, w->img);
 	return (0);
 }
 
 int		update(t_wolf *w)
 {
+	new_image(w);
 	draw_back(w);
+	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
+	mlx_destroy_image(w->mlx, w->img);
 	return (0);
 }
 

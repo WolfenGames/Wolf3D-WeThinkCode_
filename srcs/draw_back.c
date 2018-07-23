@@ -32,13 +32,6 @@ int		colour_grad(int col1, int col2, float r)
 	return (ret);
 }
 
-void	new_image(t_wolf *w)
-{
-	w->img = mlx_new_image(w->mlx, w->wi.c_w, w->wi.c_h);
-	w->dat = mlx_get_data_addr(w->img, &w->bpp, &w->sl, &w->endn);
-	w->bpp /= 8;
-}
-
 void	put_pixel(float x, float y, int col, t_wolf *w)
 {
 	if (x > 0 && x < w->wi.c_w && y > 0 && y < w->wi.c_h)
@@ -54,7 +47,6 @@ int		draw_back(t_wolf *w)
 	float	ny;
 
 	mlx_clear_window(w->mlx, w->win);
-	new_image(w);
 	x = 0;
 	while (x < w->wi.c_w)
 	{
@@ -75,7 +67,5 @@ int		draw_back(t_wolf *w)
 		}
 		x++;
 	}
-	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
-	mlx_destroy_image(w->mlx, w->img);
 	return (0);
 }

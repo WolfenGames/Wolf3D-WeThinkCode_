@@ -24,7 +24,8 @@ DIR_S = srcs
 
 DIR_O = obj
 
-SOURCES = main.c load_file.c map.c window.c keyhandle.c error.c draw.c
+SOURCES = main.c load_file.c map.c window.c keyhandle.c error.c draw_back.c \
+			extra1.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 

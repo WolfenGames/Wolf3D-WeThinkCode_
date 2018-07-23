@@ -51,7 +51,9 @@ typedef struct			s_wolf
 	int					w;
 	int					h;
 	int					bbox;
-	float				deltay;
+	float				wallsize;
+	float				playerheight;
+	float				rw;
 	t_winfo				wi;
 }						t_wolf;
 
@@ -59,5 +61,6 @@ void					load_file(char *f, t_wolf *w);
 
 int						key_press_hook(int key, t_wolf *w);
 int						exit_hook(int but, t_wolf *w);
-int						draw(t_wolf *w);
+int						draw_back(t_wolf *w);
+
 #endif

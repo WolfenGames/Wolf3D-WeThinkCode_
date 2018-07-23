@@ -47,10 +47,11 @@ void	put_pixel(float x, float y, int col, t_wolf *w)
 	}
 }
 
-int		draw(t_wolf *w)
+int		draw_back(t_wolf *w)
 {
 	int		x;
 	int		y;
+	float	ny;
 
 	mlx_clear_window(w->mlx, w->win);
 	new_image(w);
@@ -58,12 +59,18 @@ int		draw(t_wolf *w)
 	while (x < w->wi.c_w)
 	{
 		y = 0;
-		while (y < w->wi.c_h)
+		while (y < w->wi.c_h + 1)
 		{
-			if (y < w->wi.c_h / 2 + w->deltay)
-				put_pixel(x, y, 0x0000FF, w);
+			if (y < w->wi.c_h / 2 + w->playerheight)
+			{
+				ny = y / (w->wi.c_h / 2 + w->playerheight);
+				put_pixel(x, y, colour_grad(0x041266, 0xA5F1FF, ny), w);
+			}
 			else
-				put_pixel(x, y, 0x00FF00, w);
+			{
+				ny = y / w->wi.c_h;
+				put_pixel(x, y, colour_grad(0x56E0000, 0x017f07, ny), w);
+			}
 			y++;
 		}
 		x++;

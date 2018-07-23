@@ -17,7 +17,7 @@ int		key_press_hook(int key, t_wolf *w)
 {
 	if (key == ESC)
 		exit_hook(key, w);
-	draw(w);
+	draw_back(w);
 	return (0);
 }
 

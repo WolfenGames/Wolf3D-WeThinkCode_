@@ -21,15 +21,13 @@ void	set_hooks(t_wolf *w)
 
 int		expose(t_wolf *w)
 {
-	w->deltay = 0;
-	draw(w);
+	draw_back(w);
 	return (0);
 }
 
 int		update(t_wolf *w)
 {
-	w->deltay = 0;
-	draw(w);
+	draw_back(w);
 	return (0);
 }
 
@@ -44,6 +42,8 @@ void	window_init(void)
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
 	load_file("./maps/test.wolf3d", w);
+	w->wallsize = 64;
+	w->playerheight = 32;
 	set_hooks(w);
 	mlx_expose_hook(w->win, expose, w);
 	mlx_loop_hook(w->mlx, update, w);

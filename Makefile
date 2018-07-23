@@ -10,13 +10,10 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fdf
-
-FILE = maps/good/t1.fdf
+NAME = wolf3d
 
 CFLAGS += -Wextra -Wall -I./includes
 
-#ATTACH = -L libft/ -lft -L mlx_mcos -lmlx -framework OpenGL -framework AppKit
 ATTACH = -L libft/ -lft -lmlx -framework OpenGL -framework AppKit
 
 C = gcc
@@ -27,10 +24,8 @@ DIR_S = srcs
 
 DIR_O = obj
 
-SOURCES = draw.c keyhandle.c load_file.c main.c window.c map.c \
-			rotate.c error.c
+SOURCES = main.c load_file.c map.c window.c keyhandle.c error.c draw.c
 
-SRCS = $(addprefix $(DIR_S)/,$(SOURCES))
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
 $(DIR_O)/%.o:		$(DIR_S)/%.c $(HEADERS)/$(NAME).h
@@ -60,8 +55,5 @@ fclean: clean
 
 re: fclean clean all
 	@echo "\033[1;31;m[Recompiled]\033[0m"
-
-run: $(NAME)
-	./$(NAME) $(FILE)
 
 .PHONY: fclean clean all re

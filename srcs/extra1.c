@@ -14,7 +14,7 @@
 
 void	put_pixel(float x, float y, int col, t_wolf *w)
 {
-	if (x > 0 && x < w->wi.c_w && y > 0 && y < w->wi.c_h)
+	if (x >= 0 && x < w->wi.c_w && y >= 0 && y < w->wi.c_h)
 	{
 		*(unsigned int *)(w->dat + ((int)x * w->bpp) + ((int)y * w->sl)) = col;
 	}
@@ -40,9 +40,24 @@ int		colour_grad(int col1, int col2, float r)
 	return (ret);
 }
 
+float	arctorad(float a)
+{
+	return ((float)(a * M_PI) / (float) 180);
+}
+
+ float	dist(t_ray a, t_ray b)
+{
+	float	x;
+	float	y;
+
+	x = pow((b.x - a.x), 2);
+	y = pow((b.y - a.y), 2);
+	return (sqrt(x + y));
+} 
+
 void	new_image(t_wolf *w)
 {
-	w->img = mlx_new_image(w->mlx, w->wi.c_w + 1, w->wi.c_h + 1);
+	w->img = mlx_new_image(w->mlx, w->wi.c_w, w->wi.c_h);
 	w->dat = mlx_get_data_addr(w->img, &w->bpp, &w->sl, &w->endn);
 	w->bpp /= 8;
 }

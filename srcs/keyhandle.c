@@ -17,6 +17,14 @@ int		key_press_hook(int key, t_wolf *w)
 {
 	if (key == ESC)
 		exit_hook(key, w);
+	if (key == W && w->p.y < w->h - 1)
+		w->p.y += 0.1f;
+	if (key == S && w->p.y > 1)
+		w->p.y -= 0.1f;
+	if (key == A && w->p.x > 1)
+		w->p.x -= 0.1f;
+	if (key == D && w->p.y < w->w - 1)
+		w->p.x += 0.1f;
 	return (0);
 }
 

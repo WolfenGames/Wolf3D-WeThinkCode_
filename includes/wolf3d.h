@@ -21,12 +21,14 @@
 
 # define ESCAPE_YODA	"Hmm... Fucked you did"
 
-# define DIST			w->wi.c_w / tan(30)
+# define DIST			(w->wi.c_w / 2) / tan(30)
+# define M1(Xa)			w->wallsize / Xa
+# define M2(a)			w->wallsize / tan(a)
 
 # define A				0
 # define S				1
 # define D				2
-# define W				3
+# define W				13
 # define ESC			53
 # define ARROW_LEFT		123
 # define ARROW_RIGHT	124
@@ -34,18 +36,31 @@
 # define ARROW_UP		126
 # define SPACE			49
 
+typedef struct			s_ray
+{
+	double				x;
+	double				y;
+	double				deltax;
+	double				deltay;
+}						t_ray;
+typedef struct			s_player
+{
+	double				x;
+	double				y;
+}						t_player;
+
 typedef struct			s_objects
 {
-	int					x;
-	int					y;
 	int					type;
 }						t_objects;
+
 typedef struct			s_winfo
 {
 	float				c_w;
 	float				c_h;
 	char				*wn;
 }						t_winfo;
+
 typedef struct			s_wolf
 {
 	void				*mlx;
@@ -62,8 +77,11 @@ typedef struct			s_wolf
 	float				wallsize;
 	float				playerheight;
 	float				rw;
+	float				fov;
+	t_bool				showray;
 	t_winfo				wi;
 	t_objects			**pnts;
+	t_player			p;
 }						t_wolf;
 
 void					new_image(t_wolf *w);
@@ -79,7 +97,10 @@ int						key_press_hook(int key, t_wolf *w);
 int						exit_hook(int but, t_wolf *w);
 int						draw_mini(t_wolf *w);
 int						draw_back(t_wolf *w);
+int						ray_test(t_wolf *w);
 
+float					arctorad(float a);
+float					dist(t_ray a, t_ray b);
 
 
 #endif

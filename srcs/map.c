@@ -24,9 +24,11 @@
 {
 	t_objects	p;
 
-	(void)w;
-	p.x = x;
-	p.y = y;
+	if (ft_strequ(s, "p"))
+	{
+		w->p.x = x;
+		w->p.y = y;
+	}
 	p.type = (ft_strequ(s, "1")) ? 1 : 0;
 	return (p);
 }

@@ -16,9 +16,12 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
+# include <stdio.h>
 # include "../libft/includes/libft.h"
 
 # define ESCAPE_YODA	"Hmm... Fucked you did"
+
+# define DIST			w->wi.c_w / tan(30)
 
 # define A				0
 # define S				1
@@ -31,13 +34,18 @@
 # define ARROW_UP		126
 # define SPACE			49
 
+typedef struct			s_objects
+{
+	int					x;
+	int					y;
+	int					type;
+}						t_objects;
 typedef struct			s_winfo
 {
 	float				c_w;
 	float				c_h;
 	char				*wn;
 }						t_winfo;
-
 typedef struct			s_wolf
 {
 	void				*mlx;
@@ -55,14 +63,23 @@ typedef struct			s_wolf
 	float				playerheight;
 	float				rw;
 	t_winfo				wi;
+	t_objects			**pnts;
 }						t_wolf;
 
 void					new_image(t_wolf *w);
 void					load_file(char *f, t_wolf *w);
+void					free_points(t_wolf *w, t_objects **o);
+void					mapify(t_wolf *w, t_objects ***poofy);
+void					put_pixel(float x, float y, int col, t_wolf *w);
+void					window_init(void);
+void					error_load(t_wolf *w);
 
+int						colour_grad(int col1, int col2, float r);
 int						key_press_hook(int key, t_wolf *w);
 int						exit_hook(int but, t_wolf *w);
+int						draw_mini(t_wolf *w);
 int						draw_back(t_wolf *w);
+
 
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_mini.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwolf <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,29 +12,41 @@
 
 #include "../includes/wolf3d.h"
 
-int		draw_back(t_wolf *w)
+void	draw_block(int xx, int yy, int off, int col, t_wolf *w)
 {
 	int		x;
 	int		y;
-	float	ny;
 
-	mlx_clear_window(w->mlx, w->win);
+	x = xx;
+	while (x < (xx + 10))
+	{
+		y = yy;
+		while (y < (yy + 10))
+		{
+			put_pixel(xx + off, yy + off, col, w);
+			y++;
+		}
+		x++;
+	}
+}
+
+int		draw_mini(t_wolf *w)
+{
+	int		x;
+	int		y;
+
 	x = 0;
-	while (x < w->wi.c_w)
+	while (x < w->w)
 	{
 		y = 0;
-		while (y < w->wi.c_h)
+		while (y < w->h)
 		{
-			if (y < w->wi.c_h / 2 + w->playerheight)
-			{
-				ny = y / (w->wi.c_h / 2 + w->playerheight);
-				put_pixel(x, y, colour_grad(0x041266, 0xA5F1FF, ny), w);
-			}
+			if (w->pnts[x][y].type == 1)
+				draw_block(x, y, 10, 0xFF0000, w);
+			else if (w->pnts[x][y].type == 0)
+				draw_block(x, y, 10, 0x00FF00, w);
 			else
-			{
-				ny = y / w->wi.c_h;
-				put_pixel(x, y, colour_grad(0x56E0000, 0x017f07, ny), w);
-			}
+				draw_block(x, y, 10, 0x000000, w);
 			y++;
 		}
 		x++;

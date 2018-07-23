@@ -25,7 +25,7 @@ DIR_S = srcs
 DIR_O = obj
 
 SOURCES = main.c load_file.c map.c window.c keyhandle.c error.c draw_back.c \
-			extra1.c
+			extra1.c draw_mini.c
 
 OBJECTS = $(addprefix $(DIR_O)/,$(SOURCES:.c=.o))
 
@@ -56,5 +56,8 @@ fclean: clean
 
 re: fclean clean all
 	@echo "\033[1;31;m[Recompiled]\033[0m"
+
+run: $(NAME)
+	./$(NAME)
 
 .PHONY: fclean clean all re

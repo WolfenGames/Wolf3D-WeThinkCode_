@@ -48,6 +48,7 @@ void	window_init(void)
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
 	load_file("./maps/test.wolf3d", w);
+	mapify(w, &w->pnts);
 	w->wallsize = 64;
 	w->playerheight = 32;
 	set_hooks(w);

@@ -12,7 +12,7 @@
 
 #include "../includes/wolf3d.h"
 
-/* char		ft_char_toupper(char c)
+ char		ft_char_toupper(char c)
 {
 	int		ic;
 
@@ -20,64 +20,52 @@
 	return (ic);
 }
 
- t_points	new_point(int x, char *y, int z, t_map *m)
+ t_objects	new_point(int x, int y, char *s, t_wolf *w)
 {
-	t_points	p;
-	char		*found;
-	char		*t;
+	t_objects	p;
 
-	p.z = x - (m->h / 2);
-	p.y = ft_atoi(y);
-	p.x = z - (m->w / 2);
-	found = ft_strchr(y, 'x');
-	if (found)
-	{
-		t = ft_strmap(found + 1, ft_char_toupper);
-		p.c = ft_atoi_base(t, 16);
-		free(t);
-	}
-	else if (p.y < 9)
-		p.c = (p.y > 1) ? 0xFF00FF : 0xFFFF00;
-	else
-		p.c = (p.y > 9) ? 0x00FF00 : 0x0000FF;
+	(void)w;
+	p.x = x;
+	p.y = y;
+	p.type = (ft_strequ(s, "1")) ? 1 : 0;
 	return (p);
 }
 
-void		free_points(t_map *m, t_points **p)
+void		free_points(t_wolf *w, t_objects **o)
 {
 	long int	i;
 
 	i = -1;
-	while (++i < m->h)
+	while (++i < w->h)
 	{
-		free(p[i]);
+		free(o[i]);
 	}
-	free(p);
-	p = NULL;
-} */
+	free(o);
+	o = NULL;
+}
 
-void		mapify(t_wolf *w)
+void		mapify(t_wolf *w, t_objects ***poofy)
 {
 	long int	x;
 	long int	y;
 	char		**sp;
+	t_objects	**op;
 
 	x = 0;
+	op = (t_objects **)malloc(sizeof(t_objects *) * w->h);
 	while (x < w->h)
 	{
 		y = 0;
+		op[x] = (t_objects *)malloc(sizeof(t_objects) * w->w);
 		sp = ft_strsplit(w->m[x], ' ');
 		while (y < w->w)
 		{
-			if (ft_strlen(sp[y]) == 0)
-			{
-				ft_putendl(ESCAPE_YODA);
-				exit(11);
-			}
+			op[x][y] = new_point(x, y, sp[y], w);
 			free(sp[y]);
 			y++;
 		}
 		free(sp);
 		x++;
 	}
+	*poofy = op;
 }

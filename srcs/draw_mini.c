@@ -18,12 +18,12 @@ void	draw_block(int xx, int yy, int off, int col, t_wolf *w)
 	int		y;
 
 	x = xx;
-	while (x < (xx + 10))
+	while (x < (xx + off))
 	{
 		y = yy;
-		while (y < (yy + 10))
+		while (y < (yy + off))
 		{
-			put_pixel(xx + off, yy + off, col, w);
+			put_pixel(x + xx + off, y + yy + off, col, w);
 			y++;
 		}
 		x++;

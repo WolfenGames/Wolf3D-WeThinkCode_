@@ -23,6 +23,7 @@ int		expose(t_wolf *w)
 {
 	new_image(w);
 	draw_back(w);
+	draw_mini(w);
 	ray_test(w);
 	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
 	mlx_destroy_image(w->mlx, w->img);
@@ -33,6 +34,7 @@ int		update(t_wolf *w)
 {
 	new_image(w);
 	draw_back(w);
+	draw_mini(w);
 	ray_test(w);
 	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
 	mlx_destroy_image(w->mlx, w->img);
@@ -55,6 +57,10 @@ void	window_init(void)
 	w->playerheight = 32;
 	w->fov = 60;
 	w->showray = FALSE;
+	w->p.dirx = 1;
+	w->p.diry = 0;
+	w->panex = 0;
+	w->paney = 0.66;
 	set_hooks(w);
 	mlx_expose_hook(w->win, expose, w);
 	mlx_loop_hook(w->mlx, update, w);

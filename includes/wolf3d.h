@@ -47,6 +47,8 @@ typedef struct			s_player
 {
 	double				x;
 	double				y;
+	double				dirx;
+	double				diry;
 }						t_player;
 
 typedef struct			s_objects
@@ -67,6 +69,8 @@ typedef struct			s_wolf
 	void				*win;
 	void				*img;
 	void				*dat;
+	double				panex;
+	double				paney;
 	int					bpp;
 	int					sl;
 	int					endn;

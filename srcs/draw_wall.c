@@ -43,8 +43,8 @@ int		ray_test(t_wolf *w)
 	int		mx;
 	int		my;
 
-	col = 0;
-	while (col < w->wi.c_w)
+	col = w->wi.c_w;
+	while (col > 0)
 	{
 		hit = 0;
 		side = 0;
@@ -109,7 +109,7 @@ int		ray_test(t_wolf *w)
 			draw_col(col, 0xFF00FF, w, lh, ds, de);
 		else
 			draw_col(col, 0x00FF00, w, lh, ds, de);
-		col++;
+		col--;
 	}
 	return (0);
 }

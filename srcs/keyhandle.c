@@ -17,7 +17,7 @@ int		key_press_hook(int key, t_wolf *w)
 {
 	double		angle;
 
-	angle = arctorad(4.f);
+	angle = 0.1f;// arctorad(1.f);
 	if (key == ESC)
 		exit_hook(key, w);
 	if (key == W)

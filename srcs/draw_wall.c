@@ -57,7 +57,7 @@ int		ray_test(t_wolf *w)
 	{
 		hit = 0;
 		side = 0;
-		cam_x = 2 * col / (double)w->wi.c_h - 1;
+		cam_x = (2 * col) / ((double)w->wi.c_h - 1);
 		raydx = w->p.dirx + w->panex * cam_x;
 		raydy = w->p.diry + w->paney * cam_x;
 		mx = (int)w->p.x;
@@ -96,6 +96,7 @@ int		ray_test(t_wolf *w)
 			{
 				sy += dy;
 				my += stepy;
+				side = 0;
 			}
 			if (w->pnts[mx][my].type == 1)
 				hit = 1;
@@ -109,9 +110,9 @@ int		ray_test(t_wolf *w)
 		int		de;
 
 		lh = (int)(w->wi.c_h / pwalld);
-		ds = -lh / 2 + w->wi.c_h / 2;
+		ds = (-lh / 2) + (w->wi.c_h / 2);
 		if (ds < 0) ds = 0;
-		de = lh / 2 + w->wi.c_h / 2;
+		de = (lh / 2) + (w->wi.c_h / 2);
 		if (de >= w->wi.c_h) de = w->wi.c_h - 1;
 		if (side == 1)
 			draw_col(col, 0xFF00FF, w, lh, ds, de);

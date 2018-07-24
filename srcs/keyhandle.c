@@ -18,13 +18,13 @@ int		key_press_hook(int key, t_wolf *w)
 	if (key == ESC)
 		exit_hook(key, w);
 	if (key == W && &w->pnts[(int)w->p.x + 1][(int)w->p.y + 1])
-		w->p.y += 0.01f;
+		w->p.y += 0.1f;
 	if (key == S && &w->pnts[(int)w->p.x - 1][(int)w->p.y - 1])
-		w->p.y -= 0.01f;
+		w->p.y -= 0.1f;
 	if (key == A && &w->pnts[(int)w->p.x - 1][(int)w->p.y - 1])
-		w->p.x -= 0.01f;
+		w->p.x -= 0.1f;
 	if (key == D && &w->pnts[(int)w->p.x + 1][(int)w->p.y + 1])
-		w->p.x += 0.01f;
+		w->p.x += 0.1f;
 	return (0);
 }
 

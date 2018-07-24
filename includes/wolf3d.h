@@ -21,10 +21,6 @@
 
 # define ESCAPE_YODA	"Hmm... Fucked you did"
 
-# define DIST			(w->wi.c_w / 2) / tan(30)
-# define M1(Xa)			w->wallsize / Xa
-# define M2(a)			w->wallsize / tan(a)
-
 # define A				0
 # define S				1
 # define D				2

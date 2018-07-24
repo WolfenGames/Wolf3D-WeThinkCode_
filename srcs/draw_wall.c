@@ -25,8 +25,39 @@ void	draw_col(int x, int col, t_wolf *w, double len, int ds, int de)
 	}
 }
 
+int		get_col_type(int t, int side)
+{
+	if (side)
+	{
+		if (t == 1)
+			return (0xF000F0);
+		if (t == 2)
+			return (0xF00000);
+		if (t == 3)
+			return (0xAFAFAF);
+		if (t == 4)
+			return (0xFAFAFA);
+		if (t == 5)
+			return (0xFF0000);
+	}else
+	{
+		if (t == 1)
+			return (0xFF00FF);
+		if (t == 2)
+			return (0xFF0000);
+		if (t == 3)
+			return (0x0F0F0F);
+		if (t == 4)
+			return (0xF0F0F0);
+		if (t == 5)
+			return (0x0000FF);
+	}
+	return (0xFFFFFF);
+}
+
 int		ray_test(t_wolf *w)
 {
+	//struct stuff
 	double	cam_x;
 	int		col;
 	double	raydx;
@@ -48,13 +79,14 @@ int		ray_test(t_wolf *w)
 	{
 		hit = 0;
 		side = 0;
-		cam_x = 2 * col / (double)w->wi.c_h - 1;
+		cam_x = 2 * col / (double)w->wi.c_w - 1;
 		raydx = w->p.dirx + w->panex * cam_x;
 		raydy = w->p.diry + w->paney * cam_x;
 		mx = (int)w->p.x;
 		my = (int)w->p.y;
 		dx = ABS(1 / raydx);
 		dy = ABS(1 / raydy);
+		//rat_dir && step
 		if (raydx < 0)
 		{
 			stepx = -1;
@@ -75,6 +107,7 @@ int		ray_test(t_wolf *w)
 			stepy = 1;
 			sy = (my + 1.0 - w->p.y) * dy;
 		}
+		//Hit test
 		while (hit == 0)
 		{
 			if (sx < sy)
@@ -89,9 +122,10 @@ int		ray_test(t_wolf *w)
 				my += stepy;
 				side = 1;
 			}
-			if (w->pnts[mx][my].type)
+			if (w->pnts[mx][my].type > 0)
 				hit = 1;
 		}
+		//side val
 		if (side == 0)	pwalld = (mx - w->p.x + (1 - stepx) /2 ) / raydx;
 		else			pwalld = (my - w->p.y + (1 - stepy) / 2) / raydy; 
 
@@ -105,10 +139,7 @@ int		ray_test(t_wolf *w)
 		if (ds < 0) ds = 0;
 		de = (lh / 2) + (w->wi.c_h / 2);
 		if (de >= w->wi.c_h) de = w->wi.c_h - 1;
-		if (side == 1)
-			draw_col(col, 0xFF00FF, w, lh, ds, de);
-		else
-			draw_col(col, 0x00FF00, w, lh, ds, de);
+			draw_col(col, get_col_type(w->pnts[mx][my].type, side), w, lh, ds, de);
 		col--;
 	}
 	return (0);

@@ -29,7 +29,7 @@
 		w->p.x = x;
 		w->p.y = y;
 	}
-	p.type = (ft_strequ(s, "1")) ? 1 : 0;
+	p.type = (ft_atoi(s) > 0) ? ft_atoi(s) : 0;
 	return (p);
 }
 
@@ -59,7 +59,7 @@ void		mapify(t_wolf *w, t_objects ***poofy)
 	{
 		y = 0;
 		op[x] = (t_objects *)malloc(sizeof(t_objects) * w->w);
-		sp = ft_strsplit(w->m[x], ' ');
+		sp = ft_strsplit(w->m[x], ',');
 		while (y < w->w)
 		{
 			op[x][y] = new_point(x, y, sp[y], w);

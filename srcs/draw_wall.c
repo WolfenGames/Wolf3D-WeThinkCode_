@@ -19,25 +19,16 @@ void	draw_col(int x, int col, t_wolf *w, double len, int ds, int de)
 	y = 0;
 	while (y < w->wi.c_h)
 	{
-		if (y < de && y > ds)
+		if (y < de + w->playerheight && y > ds - w->playerheight)
 			put_pixel(x, y, col, w);
 		y++;
 	}
 }
 
-void	normalise(t_ray *r)
-{
-	double	len;
-
-	len = sqrt((r->y * r->y) + (r->x * r->x));
-	r->y /= len;
-	r->x /= len;
-}
-
 int		ray_test(t_wolf *w)
 {
 	double	cam_x;
-	double	col;
+	int		col;
 	double	raydx;
 	double	raydy;
 	double	pwalld;
@@ -57,7 +48,7 @@ int		ray_test(t_wolf *w)
 	{
 		hit = 0;
 		side = 0;
-		cam_x = (2 * col) / ((double)w->wi.c_h - 1);
+		cam_x = 2 * col / (double)w->wi.c_h - 1;
 		raydx = w->p.dirx + w->panex * cam_x;
 		raydy = w->p.diry + w->paney * cam_x;
 		mx = (int)w->p.x;
@@ -96,9 +87,9 @@ int		ray_test(t_wolf *w)
 			{
 				sy += dy;
 				my += stepy;
-				side = 0;
+				side = 1;
 			}
-			if (w->pnts[mx][my].type == 1)
+			if (w->pnts[mx][my].type)
 				hit = 1;
 		}
 		if (side == 0)	pwalld = (mx - w->p.x + (1 - stepx) /2 ) / raydx;

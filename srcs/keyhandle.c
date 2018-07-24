@@ -15,16 +15,42 @@
 
 int		key_press_hook(int key, t_wolf *w)
 {
+	double		angle;
+
+	angle = 10;
 	if (key == ESC)
 		exit_hook(key, w);
-	if (key == W && &w->pnts[(int)w->p.x + 1][(int)w->p.y + 1])
-		w->p.y += 0.1f;
-	if (key == S && &w->pnts[(int)w->p.x - 1][(int)w->p.y - 1])
-		w->p.y -= 0.1f;
-	if (key == A && &w->pnts[(int)w->p.x - 1][(int)w->p.y - 1])
-		w->p.x -= 0.1f;
-	if (key == D && &w->pnts[(int)w->p.x + 1][(int)w->p.y + 1])
-		w->p.x += 0.1f;
+	if (key == W)
+	{
+		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type == 0)
+			w->p.x += w->p.dirx * 0.5f;
+		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type == 0)
+			w->p.y += w->p.diry * 0.5f;
+	}if (key == S)
+	{
+		if (w->pnts[(int)(w->p.x - w->p.dirx * 0.1f)][(int)(w->p.y)].type == 0)
+			w->p.x -= w->p.dirx * 0.5f;
+		if (w->pnts[(int)(w->p.x)][(int)(w->p.y - w->p.diry * 0.1f)].type == 0)
+			w->p.y -= w->p.diry * 0.5f;
+	}
+	if (key == D)
+	{
+		double oldDirX = w->p.dirx;
+		w->p.dirx = w->p.dirx * cos(-angle) - w->p.diry * sin(-angle);
+		w->p.diry = oldDirX * sin(-angle) + w->p.diry * cos(-angle);
+		double oldPlanex = w->panex;
+		w->panex = w->panex * cos(-angle) - w->paney * sin(-angle);
+		w->paney = oldPlanex * sin(-angle) + w->paney * cos(-angle);
+	}
+	if (key == A)
+	{
+		double oldDirX = w->p.dirx;
+		w->p.dirx = w->p.dirx * cos(angle) - w->p.diry * sin(angle);
+		w->p.diry = oldDirX * sin(angle) + w->p.diry * cos(angle);
+		double oldPlanex = w->panex;
+		w->panex = w->panex * cos(angle) - w->paney * sin(1);
+		w->paney = oldPlanex * sin(angle) + w->paney * cos(angle);
+	}
 	return (0);
 }
 

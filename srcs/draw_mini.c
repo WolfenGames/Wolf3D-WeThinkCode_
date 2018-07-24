@@ -14,20 +14,7 @@
 
 void	draw_block(int xx, int yy, int off, int col, t_wolf *w)
 {
-	int		x;
-	int		y;
-
-	x = xx;
-	while (x < (xx + off))
-	{
-		y = yy;
-		while (y < (yy + off))
-		{
-			put_pixel(x + xx + off, y + yy + off, col, w);
-			y++;
-		}
-		x++;
-	}
+	put_pixel(xx + off, yy + off, col, w);
 }
 
 int		draw_mini(t_wolf *w)
@@ -43,10 +30,8 @@ int		draw_mini(t_wolf *w)
 		{
 			if (w->pnts[x][y].type == 1)
 				draw_block(x, y, 10, 0xFF0000, w);
-			else if (w->pnts[x][y].type == 0)
-				draw_block(x, y, 10, 0x00FF00, w);
-			else
-				draw_block(x, y, 10, 0x000000, w);
+			 else if (w->pnts[x][y].type == 0)
+				draw_block(x, y, 10, 0xA40F0F, w); 
 			y++;
 		}
 		x++;

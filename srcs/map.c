@@ -12,15 +12,15 @@
 
 #include "../includes/wolf3d.h"
 
- char		ft_char_toupper(char c)
+char		ft_char_toupper(char c)
 {
-	int		ic;
+	int	ic;
 
 	ic = ft_toupper(c);
 	return (ic);
 }
 
- t_objects	new_point(int x, int y, char *s, t_wolf *w)
+t_objects	new_point(int x, int y, char *s, t_wolf *w)
 {
 	t_objects	p;
 

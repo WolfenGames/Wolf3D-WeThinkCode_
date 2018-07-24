@@ -19,7 +19,7 @@ void	rotate(int key, t_wolf *w)
 	double	angle;
 
 	angle = 0.1f;
-	if (key == D)
+	if (key == D || key == ARROW_RIGHT)
 	{
 		olddirx = w->p.dirx;
 		w->p.dirx = w->p.dirx * cos(-angle) - w->p.diry * sin(-angle);
@@ -28,7 +28,7 @@ void	rotate(int key, t_wolf *w)
 		w->panex = w->panex * cos(-angle) - w->paney * sin(-angle);
 		w->paney = oldplanex * sin(-angle) + w->paney * cos(-angle);
 	}
-	if (key == A)
+	if (key == A || key == ARROW_LEFT)
 	{
 		olddirx = w->p.dirx;
 		w->p.dirx = w->p.dirx * cos(angle) - w->p.diry * sin(angle);
@@ -41,26 +41,24 @@ void	rotate(int key, t_wolf *w)
 
 void	move_x_y(int key, t_wolf *w)
 {
-	if (key == W)
+	if (key == W || key == ARROW_UP)
 	{
 		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1)
-			w->p.x += w->p.dirx * 0.5f;
+			w->p.x += w->p.dirx * 0.3f;
 		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type < 1)
-			w->p.y += w->p.diry * 0.5f;
-	}if (key == S)
+			w->p.y += w->p.diry * 0.3f;
+	}
+	if (key == S || key == ARROW_DOWN)
 	{
-		if (w->pnts[(int)(w->p.x - w->p.dirx * 0.1f) ][(int)(w->p.y)].type < 1)
-			w->p.x -= w->p.dirx * 0.5f;
+		if (w->pnts[(int)(w->p.x - w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1)
+			w->p.x -= w->p.dirx * 0.3f;
 		if (w->pnts[(int)(w->p.x)][(int)(w->p.y - w->p.diry * 0.1f)].type < 1)
-			w->p.y -= w->p.diry * 0.5f;
+			w->p.y -= w->p.diry * 0.3f;
 	}
 }
 
 int		key_press_hook(int key, t_wolf *w)
 {
-	double		angle;
-
-	angle = 0.1f;// arctorad(1.f);
 	if (key == ESC)
 		exit_hook(key, w);
 	move_x_y(key, w);

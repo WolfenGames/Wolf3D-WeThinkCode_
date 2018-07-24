@@ -19,11 +19,11 @@ int		draw_back(t_wolf *w)
 	float	ny;
 
 	mlx_clear_window(w->mlx, w->win);
-	x = 0;
-	while (x < w->wi.c_w)
+	x = -1;
+	while (x++ < w->wi.c_w)
 	{
-		y = 0;
-		while (y < w->wi.c_h)
+		y = -1;
+		while (y++ < w->wi.c_h)
 		{
 			if (y < w->wi.c_h / 2 + w->playerheight)
 			{
@@ -35,9 +35,7 @@ int		draw_back(t_wolf *w)
 				ny = y / w->wi.c_h;
 				put_pixel(x, y, colour_grad(0x56E0000, 0x017f07, ny), w);
 			}
-			y++;
 		}
-		x++;
 	}
 	return (0);
 }

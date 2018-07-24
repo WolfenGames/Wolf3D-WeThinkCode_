@@ -40,12 +40,7 @@ int		colour_grad(int col1, int col2, float r)
 	return (ret);
 }
 
-float	arctorad(float a)
-{
-	return ((float)(a * M_PI) / (float) 180);
-}
-
- float	dist(t_ray a, t_ray b)
+float	dist(t_ray a, t_ray b)
 {
 	float	x;
 	float	y;
@@ -53,7 +48,7 @@ float	arctorad(float a)
 	x = pow((b.x - a.x), 2);
 	y = pow((b.y - a.y), 2);
 	return (sqrt(x + y));
-} 
+}
 
 void	new_image(t_wolf *w)
 {

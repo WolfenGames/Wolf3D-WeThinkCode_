@@ -102,5 +102,4 @@ int						ray_test(t_wolf *w);
 float					arctorad(float a);
 float					dist(t_ray a, t_ray b);
 
-
 #endif

@@ -43,16 +43,24 @@ void	move_x_y(int key, t_wolf *w)
 {
 	if (key == W || key == ARROW_UP)
 	{
-		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1)
+		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1 && 
+			(int)(w->p.x + w->p.dirx * 0.1f) > 1 && (int)(w->p.x +
+			w->p.dirx * 0.1f < w->h))
 			w->p.x += w->p.dirx * 0.3f;
-		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type < 1)
+		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type < 1 &&
+			(int)(w->p.y + w->p.diry * 0.1f) > 1 && (int)(w->p.y +
+			w->p.diry * 0.1f < w->w))
 			w->p.y += w->p.diry * 0.3f;
 	}
 	if (key == S || key == ARROW_DOWN)
 	{
-		if (w->pnts[(int)(w->p.x - w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1)
+		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1 && 
+			(int)(w->p.x + w->p.dirx * 0.1f) > 1 && (int)(w->p.x +
+			w->p.dirx * 0.1f < w->h))
 			w->p.x -= w->p.dirx * 0.3f;
-		if (w->pnts[(int)(w->p.x)][(int)(w->p.y - w->p.diry * 0.1f)].type < 1)
+		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type < 1 &&
+			(int)(w->p.y + w->p.diry * 0.1f) > 1 && (int)(w->p.y +
+			w->p.diry * 0.1f < w->w))
 			w->p.y -= w->p.diry * 0.3f;
 	}
 }

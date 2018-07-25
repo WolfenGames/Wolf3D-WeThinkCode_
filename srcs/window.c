@@ -60,7 +60,7 @@ void	window_init(void)
 	w->p.dirx = -1;
 	w->p.diry = 0;
 	w->panex = 0;
-	w->paney = 0.66;
+	w->paney = 0.33;
 	set_hooks(w);
 	mlx_expose_hook(w->win, expose, w);
 	mlx_loop_hook(w->mlx, update, w);

@@ -31,6 +31,8 @@
 # define ARROW_DOWN		125
 # define ARROW_UP		126
 # define SPACE			49
+# define NUM_PLUS		69
+# define NUM_MINUS		78
 
 typedef struct			s_ray
 {
@@ -77,7 +79,7 @@ typedef struct			s_wolf
 	float				wallsize;
 	float				playerheight;
 	float				rw;
-	float				fov;
+	float				fog;
 	t_bool				showray;
 	t_winfo				wi;
 	t_objects			**pnts;

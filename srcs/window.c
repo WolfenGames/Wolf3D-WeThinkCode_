@@ -47,15 +47,15 @@ void	window_init(void)
 
 	w = (t_wolf *)malloc(sizeof(t_wolf));
 	w->wi.wn = "wolf3D - Win";
-	w->wi.c_h = 400;
-	w->wi.c_w = 800;
+	w->wi.c_h = 480;
+	w->wi.c_w = 640;
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
 	load_file("./maps/test.wolf3d", w);
 	mapify(w, &w->pnts);
 	w->wallsize = 64;
 	w->playerheight = 32;
-	w->fov = 60;
+	w->fog = 10;
 	w->showray = FALSE;
 	w->p.dirx = -1;
 	w->p.diry = 0;

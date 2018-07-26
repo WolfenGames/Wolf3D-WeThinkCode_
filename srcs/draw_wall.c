@@ -30,7 +30,7 @@ int		get_col_type(int t, int side)
 	if (side)
 	{
 		if (t == 1)
-			return (0xF000F0);
+			return (0x003893);
 		if (t == 2)
 			return (0xF00000);
 		if (t == 3)
@@ -38,11 +38,11 @@ int		get_col_type(int t, int side)
 		if (t == 4)
 			return (0xFAFAFA);
 		if (t == 5)
-			return (0xFF0000);
+			return (0xFFFA00);
 	}else
 	{
 		if (t == 1)
-			return (0xFF00FF);
+			return (0x00ffE9);
 		if (t == 2)
 			return (0xFF0000);
 		if (t == 3)
@@ -50,9 +50,9 @@ int		get_col_type(int t, int side)
 		if (t == 4)
 			return (0xF0F0F0);
 		if (t == 5)
-			return (0x0000FF);
+			return (0x7C7A00);
 	}
-	return (0xFFFFFF);
+	return (0xDEE0E2);
 }
 
 int		ray_test(t_wolf *w)
@@ -107,8 +107,9 @@ int		ray_test(t_wolf *w)
 			stepy = 1;
 			sy = (my + 1.0 - w->p.y) * dy;
 		}
-		//Hit test
-		while (hit == 0)
+		//Hit test=
+		int		dist = 0;
+		while (hit == 0 && dist < w->fog)
 		{
 			if (sx < sy)
 			{
@@ -122,6 +123,7 @@ int		ray_test(t_wolf *w)
 				my += stepy;
 				side = 1;
 			}
+			dist++;
 			if (w->pnts[mx][my].type > 0)
 				hit = 1;
 		}
@@ -135,11 +137,14 @@ int		ray_test(t_wolf *w)
 		int		de;
 
 		lh = (int)(w->wi.c_h / pwalld);
+		lh *= 2;
 		ds = (-lh / 2) + (w->wi.c_h / 2);
-		if (ds < 0) ds = 0;
+		if (ds < 0)
+			ds = 0;
 		de = (lh / 2) + (w->wi.c_h / 2);
-		if (de >= w->wi.c_h) de = w->wi.c_h - 1;
-			draw_col(col, get_col_type(w->pnts[mx][my].type, side), w, lh, ds, de);
+		if (de >= w->wi.c_h) 
+			de = w->wi.c_h - 1;
+		draw_col(col, get_col_type(w->pnts[mx][my].type, side), w, lh, ds, de);
 		col--;
 	}
 	return (0);

@@ -12,10 +12,10 @@
 
 #include "../includes/wolf3d.h"
 
-void	draw_col(int x, int col, t_wolf *w, double len, int ds, int de)
+void	draw_col(int x, int col, t_wolf *w, int ds, int de)
 {
 	int		y;
-	
+
 	y = 0;
 	while (y < w->wi.c_h)
 	{
@@ -27,125 +27,115 @@ void	draw_col(int x, int col, t_wolf *w, double len, int ds, int de)
 
 int		get_col_type(int t, int side)
 {
-	if (side)
-	{
-		if (t == 1)
-			return (0x003893);
-		if (t == 2)
-			return (0xF00000);
-		if (t == 3)
-			return (0xAFAFAF);
-		if (t == 4)
-			return (0xFAFAFA);
-		if (t == 5)
-			return (0xFFFA00);
-	}else
-	{
-		if (t == 1)
-			return (0x00ffE9);
-		if (t == 2)
-			return (0xFF0000);
-		if (t == 3)
-			return (0x0F0F0F);
-		if (t == 4)
-			return (0xF0F0F0);
-		if (t == 5)
-			return (0x7C7A00);
-	}
+	if (t == 1)
+		return ((side == 1) ? 0x003893 : 0x00ffE9);
+	if (t == 2)
+		return ((side == 1) ? 0xF00000 : 0xFF0000);
+	if (t == 3)
+		return ((side == 1) ? 0xAFAFAF : 0x0F0F0F);
+	if (t == 4)
+		return ((side == 1) ? 0xFAFAFA : 0xF0F0F0);
+	if (t == 5)
+		return ((side == 1) ? 0xFFFA00 : 0x7C7A00);
 	return (0xDEE0E2);
+}
+
+void	set_ray_dir_step(t_ray *r, t_wolf *w)
+{
+	if (r->raydx < 0)
+	{
+		r->stepx = -1;
+		r->sx = (w->p.x - r->mx) * r->dx;
+	}
+	else
+	{
+		r->stepx = 1;
+		r->sx = (r->mx + 1.0 - w->p.x) * r->dx;
+	}
+	if (r->raydy < 0)
+	{
+		r->stepy = -1;
+		r->sy = (w->p.y - r->my) * r->dy;
+	}
+	else
+	{
+		r->stepy = 1;
+		r->sy = (r->my + 1.0 - w->p.y) * r->dy;
+	}
+}
+
+int		ray_hit(t_ray *r, t_wolf *w)
+{
+	int		dist;
+	int		hit;
+
+	dist = 0;
+	hit = 0;
+	while (hit == 0 && dist < w->fog)
+	{
+		if (r->sx < r->sy)
+		{
+			r->sx += r->dx;
+			r->mx += r->stepx;
+			r->side = 0;
+		}
+		else
+		{
+			r->sy += r->dy;
+			r->my += r->stepy;
+			r->side = 1;
+		}
+		dist++;
+		if (w->pnts[r->mx][r->my].type > 0)
+			hit = 1;
+	}
+	return (hit);
+}
+
+void	wall_stuff(t_ray *r, t_wolf *w)
+{
+	int		lh;
+	int		ds;
+	int		de;
+
+	lh = (int)(w->wi.c_h / r->pwalld);
+	lh *= 2;
+	ds = (-lh / 2) + (w->wi.c_h / 2);
+	if (ds < 0)
+		ds = 0;
+	de = (lh / 2) + (w->wi.c_h / 2);
+	if (de >= w->wi.c_h) 
+		de = w->wi.c_h - 1;
+	draw_col(r->col,
+				get_col_type(w->pnts[r->mx][r->my].type, r->side),
+				w, ds, de);
 }
 
 int		ray_test(t_wolf *w)
 {
-	//struct stuff
-	double	cam_x;
-	int		col;
-	double	raydx;
-	double	raydy;
-	double	pwalld;
-	int		side;
-	int		stepx;
-	int		stepy;
-	int		hit;
-	double	sx;
-	double	sy;
-	double	dx;
-	double	dy;
-	int		mx;
-	int		my;
+	t_ray	*r;
 
-	col = w->wi.c_w;
-	while (col > 0)
+	r = (t_ray *)malloc(sizeof(t_ray));
+	r->col = w->wi.c_w;
+	while (r->col > 0)
 	{
-		hit = 0;
-		side = 0;
-		cam_x = 2 * col / (double)w->wi.c_w - 1;
-		raydx = w->p.dirx + w->panex * cam_x;
-		raydy = w->p.diry + w->paney * cam_x;
-		mx = (int)w->p.x;
-		my = (int)w->p.y;
-		dx = ABS(1 / raydx);
-		dy = ABS(1 / raydy);
-		//rat_dir && step
-		if (raydx < 0)
-		{
-			stepx = -1;
-			sx = (w->p.x - mx) * dx;
-		}
-		else
-		{
-			stepx = 1;
-			sx = (mx + 1.0 - w->p.x) * dx;
-		}
-		if (raydy < 0)
-		{
-			stepy = -1;
-			sy = (w->p.y - my) * dy;
-		}
-		else
-		{
-			stepy = 1;
-			sy = (my + 1.0 - w->p.y) * dy;
-		}
-		//Hit test=
-		int		dist = 0;
-		while (hit == 0 && dist < w->fog)
-		{
-			if (sx < sy)
-			{
-				sx += dx;
-				mx += stepx;
-				side = 0;
-			}
-			else
-			{
-				sy += dy;
-				my += stepy;
-				side = 1;
-			}
-			dist++;
-			if (w->pnts[mx][my].type > 0)
-				hit = 1;
-		}
-		//side val
-		if (side == 0)	pwalld = (mx - w->p.x + (1 - stepx) /2 ) / raydx;
-		else			pwalld = (my - w->p.y + (1 - stepy) / 2) / raydy; 
-
-		//TODO: Sort later
-		int		lh;
-		int		ds;
-		int		de;
-
-		lh = (int)(w->wi.c_h / pwalld);
-		lh *= 2;
-		ds = (-lh / 2) + (w->wi.c_h / 2);
-		if (ds < 0)
-			ds = 0;
-		de = (lh / 2) + (w->wi.c_h / 2);
-		if (de >= w->wi.c_h) 
-			de = w->wi.c_h - 1;
-		draw_col(col, get_col_type(w->pnts[mx][my].type, side), w, lh, ds, de);
-		col--;
+		r->hit = 0;
+		r->side = 0;
+		r->cam_x = 2 * r->col / (double)w->wi.c_w - 1;
+		r->raydx = w->p.dirx + w->panex * r->cam_x;
+		r->raydy = w->p.diry + w->paney * r->cam_x;
+		r->mx = (int)w->p.x;
+		r->my = (int)w->p.y;
+		r->dx = ABS(1 / r->raydx);
+		r->dy = ABS(1 / r->raydy);
+		set_ray_dir_step(r, w);
+		ray_hit(r, w);
+		r->pwalld = (r->side == 0) ?
+						(r->mx - w->p.x + (1 - r->stepx) /2 ) / r->raydx :
+						(r->my - w->p.y + (1 - r->stepy) / 2) / r->raydy;
+		wall_stuff(r, w);
+		r->col--;
 	}
+	free(r);
 	return (0);
 }

@@ -36,10 +36,24 @@
 
 typedef struct			s_ray
 {
+	int					col;
+	int					side;
+	int					stepx;
+	int					stepy;
+	int					hit;
+	int					mx;
+	int					my;
 	double				x;
 	double				y;
-	double				deltax;
-	double				deltay;
+	double				cam_x;
+	double				raydx;
+	double				raydy;
+	double				sx;
+	double				sy;
+	double				dx;
+	double				dy;
+	double				pwalld;
+
 }						t_ray;
 typedef struct			s_player
 {

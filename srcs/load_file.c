@@ -40,7 +40,7 @@ int			count(const char *s)
 	int		c;
 	char	**sp;
 
-	sp = ft_strsplit(s, ',');
+	sp = ft_strsplit(s, ' ');
 	c = 0;
 	while (sp[c])
 	{
@@ -57,7 +57,7 @@ void		check_line(const char *str)
 	char	**sp;
 
 	i = 0;
-	sp = ft_strsplit(str, ',');
+	sp = ft_strsplit(str, ' ');
 	if (!sp[0])
 	{
 		ft_putendl(ESCAPE_YODA);

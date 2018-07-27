@@ -37,51 +37,21 @@ void	rotate(int key, t_wolf *w)
 	}
 }
 
-t_bool	move_off_zero_x(t_wolf *w)
-{
-	float	x;
-	float	y;
-	float	x1;
-	float	y1;
-
-	x = w->p.x;
-	y = w->p.y;
-	x1 = x + (w->p.x + w->p.dirx * 0.4f);
-	y1 = y + (w->p.y + w->p.diry * 0.4f);
-	return ((w->pnts[(int)(x1)][(int)(y)].type != 0) ||
-			(w->pnts[(int)(x)][(int)(y1)].type != 0));
-}
-
-t_bool	move_off_zero_y(t_wolf *w)
-{
-	float	x;
-	float	y;
-	float	x1;
-	float	y1;
-
-	x = w->p.x;
-	y = w->p.y;
-	x1 = x - (w->p.x + w->p.dirx * 0.4f);
-	y1 = y - (w->p.y + w->p.diry * 0.4f);
-	return ((w->pnts[(int)(x1)][(int)(y)].type != 0) ||
-			(w->pnts[(int)(x)][(int)(y1)].type != 0));
-}
-
 void	move_x_y(int key, t_wolf *w)
 {
 	if ((key == W || key == ARROW_UP))
 	{
-		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1)
-			w->p.x += w->p.dirx * 0.3f;
-		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type < 1)
-			w->p.y += w->p.diry * 0.3f;
+		if (w->pnts[(int)(w->p.x + w->p.dirx * 1.5f)][(int)(w->p.y)].type < 1)
+			w->p.x += w->p.dirx * 1.f;
+		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 1.5f)].type < 1)
+			w->p.y += w->p.diry * 1.f;
 	}
 	if ((key == S || key == ARROW_DOWN))
 	{
-		if (w->pnts[(int)(w->p.x + w->p.dirx * 0.1f)][(int)(w->p.y)].type < 1)
-			w->p.x -= w->p.dirx * 0.3f;
-		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 0.1f)].type < 1)
-			w->p.y -= w->p.diry * 0.3f;
+		if (w->pnts[(int)(w->p.x + w->p.dirx * 1.5f)][(int)(w->p.y)].type < 1)
+			w->p.x -= w->p.dirx * 1.f;
+		if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * 1.5f)].type < 1)
+			w->p.y -= w->p.diry * 1.f;
 	}
 
 }

@@ -28,12 +28,14 @@ int		draw_back(t_wolf *w)
 			if (y < w->wi.c_h / 2 + w->playerheight)
 			{
 				ny = y / (w->wi.c_h / 2 + w->playerheight);
-				put_pixel(x, y, colour_grad(0x041266, 0xA5F1FF, ny), w);
+				put_pixel(x, y, (y % 2) ? colour_grad(0x041266, 0xA5F1FF, ny) :
+					0x000000, w);
 			}
 			else
 			{
 				ny = y / w->wi.c_h;
-				put_pixel(x, y, colour_grad(0x56E0000, 0x017f07, ny), w);
+				put_pixel(x, y, (y % 2) ? colour_grad(0x56E000, 0x017f07, ny) :
+					0x0000000, w);
 			}
 		}
 	}

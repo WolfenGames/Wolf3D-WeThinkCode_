@@ -20,23 +20,24 @@ void	draw_col(int x, int col, t_wolf *w, int ds, int de)
 	while (y < w->wi.c_h)
 	{
 		if (y < de + w->playerheight && y > ds - w->playerheight)
-			put_pixel(x, y, col, w);
+			put_pixel(x, y, (y % 2) ? col : 0x000000, w);
 		y++;
 	}
 }
 
-int		get_col_type(int t, int side)
+int		get_col_type(int t, t_ray *r)
 {
+	(void)r;
 	if (t == 1)
-		return ((side == 1) ? 0x003893 : 0x00ffE9);
+		return ((r->side == 1) ? 0x003893 : 0xf0fAE9);
 	if (t == 2)
-		return ((side == 1) ? 0xF00000 : 0xFF0000);
+		return ((r->side == 1) ? 0xF0F000 : 0xFF0000);
 	if (t == 3)
-		return ((side == 1) ? 0xAFAFAF : 0x0F0F0F);
+		return ((r->side == 1) ? 0xAFAFAF : 0xAF45AE);
 	if (t == 4)
-		return ((side == 1) ? 0xFAFAFA : 0xF0F0F0);
+		return ((r->side == 1) ? 0xFAFAFA : 0xF0F0F0);
 	if (t == 5)
-		return ((side == 1) ? 0xFFFA00 : 0x7C7A00);
+		return ((r->side == 1) ? 0xFFFA00 : 0x7C7A00);
 	return (0xDEE0E2);
 }
 
@@ -69,25 +70,25 @@ int		ray_hit(t_ray *r, t_wolf *w)
 	int		dist;
 	int		hit;
 
-	dist = 0;
 	hit = 0;
-	while (hit == 0 && dist < w->fog)
+	dist = 0;
+	while (hit == 0)// && dist < w->fog)
 	{
 		if (r->sx < r->sy)
 		{
+			r->side = 0;
 			r->sx += r->dx;
 			r->mx += r->stepx;
-			r->side = 0;
 		}
 		else
 		{
+			r->side = 1;
 			r->sy += r->dy;
 			r->my += r->stepy;
-			r->side = 1;
 		}
-		dist++;
 		if (w->pnts[r->mx][r->my].type > 0)
 			hit = 1;
+		dist++;
 	}
 	return (hit);
 }
@@ -107,7 +108,7 @@ void	wall_stuff(t_ray *r, t_wolf *w)
 	if (de >= w->wi.c_h) 
 		de = w->wi.c_h - 1;
 	draw_col(r->col,
-				get_col_type(w->pnts[r->mx][r->my].type, r->side),
+				get_col_type(w->pnts[r->mx][r->my].type, r),
 				w, ds, de);
 }
 
@@ -129,11 +130,13 @@ int		ray_test(t_wolf *w)
 		r->dx = ABS(1 / r->raydx);
 		r->dy = ABS(1 / r->raydy);
 		set_ray_dir_step(r, w);
-		ray_hit(r, w);
-		r->pwalld = (r->side == 0) ?
-						(r->mx - w->p.x + (1 - r->stepx) /2 ) / r->raydx :
-						(r->my - w->p.y + (1 - r->stepy) / 2) / r->raydy;
-		wall_stuff(r, w);
+		if (ray_hit(r, w) == 1)
+		{
+			r->pwalld = (r->side == 0) ?
+							(r->mx - w->p.x + (1 - r->stepx) /2 ) / r->raydx :
+							(r->my - w->p.y + (1 - r->stepy) / 2) / r->raydy;
+			wall_stuff(r, w);
+		}
 		r->col--;
 	}
 	free(r);

@@ -14,7 +14,7 @@ NAME = wolf3d
 
 CFLAGS += -Wextra -Wall -I./includes
 
-ATTACH = -L libft/ -lft -lmlx -framework OpenGL -framework AppKit
+ATTACH = -L libft/ -lft -L mlx/ -lmlx -framework OpenGL -framework AppKit
 
 C = gcc
 

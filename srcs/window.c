@@ -47,8 +47,8 @@ void	window_init(void)
 
 	w = (t_wolf *)malloc(sizeof(t_wolf));
 	w->wi.wn = "wolf3D - Win";
-	w->wi.c_h = 480;
-	w->wi.c_w = 640;
+	w->wi.c_h = 400;
+	w->wi.c_w = 800;
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
 	load_file("./maps/test.wolf3d", w);

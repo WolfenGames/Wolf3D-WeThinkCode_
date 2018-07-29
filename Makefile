@@ -14,7 +14,15 @@ NAME = wolf3d
 
 CFLAGS += -Wextra -Wall -I./includes
 
-ATTACH = -L libft/ -lft -L mlx/ -lmlx -framework OpenGL -framework AppKit
+ifeq ($(OS), Linux)
+	MLXDIR	= ./miniLibX_X11
+	MLX_LNK	= -l mlx -lXext -lX11
+else
+	MLXDIR	= ./miniLibX
+	MLX_LNK	= -l mlx -framework OpenGL -framework AppKit
+endif
+
+ATTACH = -L libft/ -lft -lmlx -lX11 -LXert
 
 C = gcc
 

@@ -12,6 +12,8 @@
 
 NAME = wolf3d
 
+OS   = $(shell uname)
+
 CFLAGS += -Wextra -Wall -I./includes
 
 ifeq ($(OS), Linux)

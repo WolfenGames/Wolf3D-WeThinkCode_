@@ -20,14 +20,13 @@ void	draw_col(int x, int col, t_wolf *w, int ds, int de)
 	while (y < w->wi.c_h)
 	{
 		if (y < de + w->playerheight && y > ds - w->playerheight)
-			put_pixel(x, y, (y % 2) ? col : 0x000000, w);
+			put_pixel(x, y, col, w);
 		y++;
 	}
 }
 
 int		get_col_type(int t, t_ray *r)
 {
-	(void)r;
 	if (t == 1)
 		return ((r->side == 1) ? 0x003893 : 0xf0fAE9);
 	if (t == 2)
@@ -35,7 +34,7 @@ int		get_col_type(int t, t_ray *r)
 	if (t == 3)
 		return ((r->side == 1) ? 0xAFAFAF : 0xAF45AE);
 	if (t == 4)
-		return ((r->side == 1) ? 0xFAFAFA : 0xF0F0F0);
+		return ((r->side == 1) ? 0xFAFAFA : 0xBAEC16);
 	if (t == 5)
 		return ((r->side == 1) ? 0xFFFA00 : 0x7C7A00);
 	return (0xDEE0E2);
@@ -67,12 +66,11 @@ void	set_ray_dir_step(t_ray *r, t_wolf *w)
 
 int		ray_hit(t_ray *r, t_wolf *w)
 {
-	int		dist;
 	int		hit;
 
 	hit = 0;
-	dist = 0;
-	while (hit == 0)// && dist < w->fog)
+	w->dist = 0;
+	while (hit == 0)// && w->dist < w->fog)
 	{
 		if (r->sx < r->sy)
 		{
@@ -88,9 +86,16 @@ int		ray_hit(t_ray *r, t_wolf *w)
 		}
 		if (w->pnts[r->mx][r->my].type > 0)
 			hit = 1;
-		dist++;
+		w->dist++;
 	}
 	return (hit);
+}
+
+int		p_dist(t_wolf *w, t_ray *r)
+{
+	return (sqrt(((r->mx - w->p.x) * (r->mx - w->p.x)) +
+					(r->my - w->p.y) * (r->my - w->p.y)));
+	return (0);
 }
 
 void	wall_stuff(t_ray *r, t_wolf *w)
@@ -107,8 +112,10 @@ void	wall_stuff(t_ray *r, t_wolf *w)
 	de = (lh / 2) + (w->wi.c_h / 2);
 	if (de >= w->wi.c_h) 
 		de = w->wi.c_h - 1;
-	draw_col(r->col,
+	(w->dist < 10) ? draw_col(r->col,
 				get_col_type(w->pnts[r->mx][r->my].type, r),
+				w, ds, de) :
+				draw_col(r->col, 0x666666 | w->pnts[r->mx][r->my].type,
 				w, ds, de);
 }
 

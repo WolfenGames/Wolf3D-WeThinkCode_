@@ -55,7 +55,7 @@ void	window_init(void)
 	mapify(w, &w->pnts);
 	w->wallsize = 64;
 	w->playerheight = 32;
-	w->fog = 10;
+	w->fog = w->h * w->w;
 	w->showray = FALSE;
 	w->p.dirx = -1;
 	w->p.diry = 0;

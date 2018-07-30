@@ -94,6 +94,7 @@ typedef struct			s_wolf
 	float				playerheight;
 	float				rw;
 	float				fog;
+	float				dist;
 	t_bool				showray;
 	t_winfo				wi;
 	t_objects			**pnts;

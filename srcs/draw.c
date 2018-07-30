@@ -16,8 +16,10 @@ int		get_image_col(t_tex *t, double x, double y)
 {
 	int		i;
 
+	x = 1 - x;
 	x *= t->ww;
 	x = (int)x;
+	y = 1 - y;
 	y *= t->wh;
 	y = (int)y;
 	i = x + y * t->ww;

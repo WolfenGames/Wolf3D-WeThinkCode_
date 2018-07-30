@@ -29,6 +29,8 @@ static int	get_lc(char *f)
 		l++;
 		free(dat);
 	}
+	if (l == 0)
+		exit(100);
 	if (dat)
 		free(dat);
 	close(fd);
@@ -94,7 +96,6 @@ void		load_file(char *f, t_wolf *w)
 	}
 	close(fd);
 	w->w = count(w->m[0]);
-	error_load(w);
 	if (w->h < 1 && w->w < 1)
 		exit(4);
 }

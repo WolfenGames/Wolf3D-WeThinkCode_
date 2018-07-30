@@ -73,7 +73,7 @@ void	load_tex(t_wolf *w)
 										&w->t[4].b, &w->t[4].b);
 }
 
-void	window_init(void)
+void	window_init(char *fn)
 {
 	t_wolf	*w;
 
@@ -83,18 +83,17 @@ void	window_init(void)
 	w->wi.c_w = 800;
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
-	load_file("./maps/test.wolf3d", w);
+	load_file(fn, w);
+	line_length(w);
 	check_tex();
 	load_tex(w);
 	mapify(w, &w->pnts);
 	w->playerheight = 32;
-	w->showray = FALSE;
 	w->p.dirx = -1;
 	w->p.diry = 0;
 	w->panex = 0;
 	w->paney = 0.66f;
 	set_hooks(w);
-	mlx_expose_hook(w->win, update, w);
 	mlx_loop_hook(w->mlx, update, w);
 	mlx_loop(w->mlx);
 }

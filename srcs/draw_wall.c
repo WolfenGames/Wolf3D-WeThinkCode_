@@ -79,17 +79,17 @@ void	wall_stuff(t_ray *r, t_wolf *w)
 	draw_col(r->col, w, r, d);
 }
 
-void	reset_ray(t_ray r, t_wolf *w)
+void	reset_ray(t_ray *r, t_wolf *w)
 {
-	r.hit = 0;
-	r.side = 0;
-	r.cam_x = 2 * r.col / (double)w->wi.c_w - 1;
-	r.raydx = w->p.dirx + w->panex * r.cam_x;
-	r.raydy = w->p.diry + w->paney * r.cam_x;
-	r.mx = (int)w->p.x;
-	r.my = (int)w->p.y;
-	r.dx = ABS(1 / r.raydx);
-	r.dy = ABS(1 / r.raydy);
+	r->hit = 0;
+	r->side = 0;
+	r->cam_x = 2 * r->col / (double)w->wi.c_w - 1;
+	r->raydx = w->p.dirx + w->panex * r->cam_x;
+	r->raydy = w->p.diry + w->paney * r->cam_x;
+	r->mx = (int)w->p.x;
+	r->my = (int)w->p.y;
+	r->dx = ABS(1 / r->raydx);
+	r->dy = ABS(1 / r->raydy);
 }
 
 int		ray_test(t_wolf *w)
@@ -97,9 +97,9 @@ int		ray_test(t_wolf *w)
 	t_ray	r;
 
 	r.col = w->wi.c_w;
-	while (r.col > 0)
+	while (r.col >= 0)
 	{
-		reset_ray(r, w);
+		reset_ray(&r, w);
 		set_ray_dir_step(&r, w);
 		if (ray_hit(&r, w) == 1)
 		{

@@ -52,6 +52,10 @@ void	move_x_y(int key, t_wolf *w)
 			if (w->pnts[(int)(w->p.x)][(int)(w->p.y + w->p.diry * ms)].type < 1)
 				w->p.y += w->p.diry * ms;
 		}
+	}
+	if (w->p.x - w->p.dirx * ms > 0 && w->p.y - w->p.diry * ms > 0 &&
+		w->p.x - w->p.dirx * ms < w->h && w->p.y - w->p.diry * ms < w->w)
+	{
 		if ((key == S || key == ARROW_DOWN))
 		{
 			if (w->pnts[(int)(w->p.x - w->p.dirx * ms)][(int)(w->p.y)].type < 1)
@@ -66,10 +70,6 @@ int		key_press_hook(int key, t_wolf *w)
 {
 	if (key == ESC)
 		exit_hook(key, w);
-	if (key == NUM_PLUS)
-		w->fog += 1;
-	if (key == NUM_MINUS)
-		w->fog -= 1;
 	move_x_y(key, w);
 	rotate(key, w);
 	return (0);

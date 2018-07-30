@@ -12,8 +12,18 @@
 
 #include "../includes/wolf3d.h"
 
-int		main(void)
+int		main(int ac, char **av)
 {
-	window_init();
+	if (ac > 1 && ft_strequ(ft_strrchr(av[1], '.'), ".wolf3d"))
+	{
+		ft_putendl("Only first argument counts...");
+		ft_putendl("Loading file");
+		window_init(av[1]);
+	}
+	else
+	{
+		ft_putendl("FEED ME VALID FILES!!!!");
+		ft_putendl("e.g		:: ./wolf3d maps/test.wolf3d");
+	}
 	return (0);
 }

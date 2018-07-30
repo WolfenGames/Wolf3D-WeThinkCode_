@@ -12,14 +12,30 @@
 
 #include "../includes/wolf3d.h"
 
-void		error_load(t_wolf *w)
+void		line_length(t_wolf *w)
 {
-	int		i;
+	long int	x;
+	long int	y;
+	int			z;
+	char		**sp;
 
-	i = 0;
-	while (i < w->h - 1)
+	x = 0;
+	while (x < w->h)
 	{
-		i++;
+		y = 0;
+		sp = ft_strsplit(w->m[x], ' ');
+		while (y < w->w)
+		{
+			z = 0;
+			while (sp[z])
+				z++;
+			if (z != w->w)
+				exit(99);
+			free(sp[y]);
+			y++;
+		}
+		free(sp);
+		x++;
 	}
 }
 

@@ -13,7 +13,7 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# include "mlx.h"
+# include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -126,7 +126,6 @@ int						get_col_type(int t, t_ray *r);
 int						ray_in_map(t_ray *r, t_wolf *w);
 int						key_press_hook(int key, t_wolf *w);
 int						exit_hook(int but, t_wolf *w);
-int						draw_mini(t_wolf *w);
 int						draw_back(t_wolf *w);
 int						ray_test(t_wolf *w);
 int						get_image_col(t_tex *t, double x, double y);

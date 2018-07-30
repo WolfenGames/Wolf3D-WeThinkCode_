@@ -119,6 +119,7 @@ void					mapify(t_wolf *w, t_objects ***poofy);
 void					put_pixel(float x, float y, int col, t_wolf *w);
 void					window_init(void);
 void					error_load(t_wolf *w);
+void					draw_col(int x, t_wolf *w, t_ray *r, int d[2]);
 
 int						colour_grad(int col1, int col2, float r);
 int						get_col_type(int t, t_ray *r);
@@ -128,6 +129,8 @@ int						exit_hook(int but, t_wolf *w);
 int						draw_mini(t_wolf *w);
 int						draw_back(t_wolf *w);
 int						ray_test(t_wolf *w);
+int						get_image_col(t_tex *t, double x, double y);
+
 
 float					arctorad(float a);
 float					dist(t_ray a, t_ray b);

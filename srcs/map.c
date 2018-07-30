@@ -29,7 +29,13 @@ t_objects	new_point(int x, int y, char *s, t_wolf *w)
 		w->p.x = x;
 		w->p.y = y;
 	}
-	p.type = (ft_atoi(s) > 0) ? ft_atoi(s) : 0;
+	if (ABS(ft_atoi(s)) >= 0 && ABS(ft_atoi(s)) <= 5)
+		p.type = ft_atoi(s);
+	else
+	{
+		ft_putendl("I only have 5 textures, why do you hurt me so");
+		exit(9);
+	}
 	return (p);
 }
 

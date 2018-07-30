@@ -42,7 +42,8 @@ void	move_x_y(int key, t_wolf *w)
 	double	ms;
 
 	ms = w->movespeed;
-	if (w->p.x + w->p.dirx * ms> 0 && w->p.y + w->p.diry * ms > 0 && w->p.x + w->p.dirx * ms< w->h && w->p.y + w->p.diry * ms < w->w)
+	if (w->p.x + w->p.dirx * ms > 0 && w->p.y + w->p.diry * ms > 0 &&
+		w->p.x + w->p.dirx * ms < w->h && w->p.y + w->p.diry * ms < w->w)
 	{
 		if ((key == W || key == ARROW_UP))
 		{

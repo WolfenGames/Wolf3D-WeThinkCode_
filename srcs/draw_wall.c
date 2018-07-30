@@ -12,38 +12,6 @@
 
 #include "../includes/wolf3d.h"
 
-int		get_image_col(t_tex *t, double x, double y)
-{
-	int		i;
-
-	x *= t->ww;
-	x = (int)x;
-	y *= t->wh;
-	y = (int)y;
-	i = x + y * t->ww;
-	return (t->dat[i]);
-}
-
-void	draw_col(int x, t_wolf *w, t_ray *r, int d[2])
-{
-	double	y;
-	double	cy;
-
-	y = 0;
-
-	while (y < w->wi.c_h)
-	{
-		if (y < d[0] && y > d[1])
-		{
-			cy = (y - (double)d[0]) / ((double)d[1] - (double)d[0]);
-			put_pixel(x, y, get_image_col(&w->t[
-				w->pnts[r->mx][r->my].type - 1
-			], w->xslice, cy), w);
-		}
-		y++;
-	}
-}
-
 void	set_ray_dir_step(t_ray *r, t_wolf *w)
 {
 	if (r->raydx < 0)
@@ -88,7 +56,7 @@ int		ray_hit(t_ray *r, t_wolf *w)
 			r->sy += r->dy;
 			r->my += r->stepy;
 		}
-		if (ray_in_map(r, w) && w->pnts[r->mx][r->my].type > 0)
+		if (ray_in_map(r, w) && ABS(w->pnts[r->mx][r->my].type) > 0)
 			hit = 1;
 		w->dist++;
 	}
@@ -111,6 +79,19 @@ void	wall_stuff(t_ray *r, t_wolf *w)
 	draw_col(r->col, w, r, d);
 }
 
+void	reset_ray(t_ray r, t_wolf *w)
+{
+	r.hit = 0;
+	r.side = 0;
+	r.cam_x = 2 * r.col / (double)w->wi.c_w - 1;
+	r.raydx = w->p.dirx + w->panex * r.cam_x;
+	r.raydy = w->p.diry + w->paney * r.cam_x;
+	r.mx = (int)w->p.x;
+	r.my = (int)w->p.y;
+	r.dx = ABS(1 / r.raydx);
+	r.dy = ABS(1 / r.raydy);
+}
+
 int		ray_test(t_wolf *w)
 {
 	t_ray	r;
@@ -118,15 +99,7 @@ int		ray_test(t_wolf *w)
 	r.col = w->wi.c_w;
 	while (r.col > 0)
 	{
-		r.hit = 0;
-		r.side = 0;
-		r.cam_x = 2 * r.col / (double)w->wi.c_w - 1;
-		r.raydx = w->p.dirx + w->panex * r.cam_x;
-		r.raydy = w->p.diry + w->paney * r.cam_x;
-		r.mx = (int)w->p.x;
-		r.my = (int)w->p.y;
-		r.dx = ABS(1 / r.raydx);
-		r.dy = ABS(1 / r.raydy);
+		reset_ray(r, w);
 		set_ray_dir_step(&r, w);
 		if (ray_hit(&r, w) == 1)
 		{

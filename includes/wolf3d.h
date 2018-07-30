@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include "../libft/includes/libft.h"
 
-# define ESCAPE_YODA	"Hmm... Fucked you did"
+# define ESCAPE_YODA	"Hmm... Fucked up you did"
 
 # define A				0
 # define S				1
@@ -33,6 +33,7 @@
 # define SPACE			49
 # define NUM_PLUS		69
 # define NUM_MINUS		78
+
 typedef struct			s_tex
 {
 	void				*img;
@@ -101,8 +102,6 @@ typedef struct			s_wolf
 	int					bbox;
 	float				wallsize;
 	float				playerheight;
-	float				rw;
-	float				fog;
 	float				dist;
 	double				xslice;
 	t_bool				showray;
@@ -117,9 +116,10 @@ void					load_file(char *f, t_wolf *w);
 void					free_points(t_wolf *w, t_objects **o);
 void					mapify(t_wolf *w, t_objects ***poofy);
 void					put_pixel(float x, float y, int col, t_wolf *w);
-void					window_init(void);
+void					window_init(char *fn);
 void					error_load(t_wolf *w);
 void					draw_col(int x, t_wolf *w, t_ray *r, int d[2]);
+void					line_length(t_wolf *w);
 
 int						colour_grad(int col1, int col2, float r);
 int						get_col_type(int t, t_ray *r);
@@ -129,7 +129,6 @@ int						exit_hook(int but, t_wolf *w);
 int						draw_back(t_wolf *w);
 int						ray_test(t_wolf *w);
 int						get_image_col(t_tex *t, double x, double y);
-
 
 float					arctorad(float a);
 float					dist(t_ray a, t_ray b);

@@ -43,14 +43,40 @@ int		update(t_wolf *w)
 	return (0);
 }
 
+void	load_tex(t_wolf *w)
+{
+	printf("Loading\n");
+	w->t[0].img = mlx_xpm_file_to_image(w->mlx, "tex/colorstone.xpm",
+										&w->t[0].ww, &w->t[0].wh);
+	w->t[0].dat = mlx_get_data_addr(w->t[0].img, &w->t[0].b, 
+										&w->t[0].b, &w->t[0].b);
+	w->t[1].img = mlx_xpm_file_to_image(w->mlx, "tex/bluestone.xpm",
+										&w->t[1].ww, &w->t[1].wh);
+	w->t[1].dat = mlx_get_data_addr(w->t[1].img, &w->t[1].b, 
+										&w->t[1].b, &w->t[1].b);
+	w->t[2].img = mlx_xpm_file_to_image(w->mlx, "tex/greystone.xpm",
+										&w->t[2].ww, &w->t[2].wh);
+	w->t[2].dat = mlx_get_data_addr(w->t[2].img, &w->t[2].b, 
+										&w->t[2].b, &w->t[2].b);
+	w->t[3].img = mlx_xpm_file_to_image(w->mlx, "tex/mossy.xpm",
+										&w->t[3].ww, &w->t[3].wh);
+	w->t[3].dat = mlx_get_data_addr(w->t[3].img, &w->t[3].b, 
+										&w->t[3].b, &w->t[3].b);
+	w->t[4].img = mlx_xpm_file_to_image(w->mlx, "tex/wood.xpm",
+										&w->t[4].ww, &w->t[4].wh);
+	w->t[4].dat = mlx_get_data_addr(w->t[4].img, &w->t[4].b, 
+										&w->t[4].b, &w->t[4].b);
+	printf("done\n");
+}
+
 void	window_init(void)
 {
 	t_wolf	*w;
 
 	w = (t_wolf *)malloc(sizeof(t_wolf));
 	w->wi.wn = "wolf3D - Win";
-	w->wi.c_h = 1080;
-	w->wi.c_w = 1920;
+	w->wi.c_h = 400;
+	w->wi.c_w = 800;
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
 	load_file("./maps/test.wolf3d", w);
@@ -60,9 +86,10 @@ void	window_init(void)
 	w->p.dirx = -1;
 	w->p.diry = 0;
 	w->panex = 0;
-	w->paney = 0.24;
+	w->paney = 0.66f;
 	set_hooks(w);
 	mlx_expose_hook(w->win, expose, w);
 	mlx_loop_hook(w->mlx, update, w);
+	load_tex(w);
 	mlx_loop(w->mlx);
 }

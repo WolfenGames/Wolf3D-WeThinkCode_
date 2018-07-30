@@ -24,9 +24,9 @@ int		draw_back(t_wolf *w)
 		y = -1;
 		while (y++ < w->wi.c_h)
 		{
-			if (y < w->wi.c_h / 2 + w->playerheight)
+			if (y < w->wi.c_h / 2 - w->playerheight)
 			{
-				ny = y / (w->wi.c_h / 2 + w->playerheight);
+				ny = y / (w->wi.c_h / 2 - w->playerheight);
 				put_pixel(x, y, (y % 2) ? colour_grad(0x041266, 0xA5F1FF, ny) :
 					0x000000, w);
 			}

@@ -12,15 +12,34 @@
 
 #include "../includes/wolf3d.h"
 
-void	draw_col(int x, int col, t_wolf *w, int d[2])
+int		get_image_col(t_tex *t, double x, double y)
 {
-	int		y;
+	int		i;
+
+	x *= t->ww;
+	x = (int)x;
+	y *= t->wh;
+	y = (int)y;
+	i = x + y * t->ww;
+	return (t->dat[i]);
+}
+
+void	draw_col(int x, t_wolf *w, t_ray *r, int d[2])
+{
+	double	y;
+	double	cy;
 
 	y = 0;
+
 	while (y < w->wi.c_h)
 	{
-		if (y < d[0] + w->playerheight && y > d[1] - w->playerheight)
-			put_pixel(x, y, col, w);
+		if (y < d[0] && y > d[1])
+		{
+			cy = (y - (double)d[0]) / ((double)d[1] - (double)d[0]);
+			put_pixel(x, y, get_image_col(&w->t[
+				w->pnts[r->mx][r->my].type - 1
+			], w->xslice, cy), w);
+		}
 		y++;
 	}
 }
@@ -85,19 +104,11 @@ void	wall_stuff(t_ray *r, t_wolf *w)
 
 	lh = (int)(w->wi.c_h / r->pwalld);
 	lh *= 2;
-	ds = (-lh / 2) + (w->wi.c_h / 2);
-	if (ds < 0)
-		ds = 0;
-	de = (lh / 2) + (w->wi.c_h / 2);
-	if (de >= w->wi.c_h)
-		de = w->wi.c_h - 1;
+	ds = (-lh / 4) + (w->wi.c_h / 2) - w->playerheight;
+	de = (lh / 4) + (w->wi.c_h / 2) - w->playerheight;
 	d[0] = de;
 	d[1] = ds;
-	(w->dist < 10) ? draw_col(r->col,
-				get_col_type(w->pnts[r->mx][r->my].type, r),
-				w, d) :
-				draw_col(r->col, (w->pnts[r->mx][r->my].type >> 1) | 0x666666,
-				w, d);
+	draw_col(r->col, w, r, d);
 }
 
 int		ray_test(t_wolf *w)
@@ -122,6 +133,10 @@ int		ray_test(t_wolf *w)
 			r.pwalld = (r.side == 0) ?
 							(r.mx - w->p.x + (1 - r.stepx) / 2) / r.raydx :
 							(r.my - w->p.y + (1 - r.stepy) / 2) / r.raydy;
+			w->xslice = (r.side == 1) ?
+							(w->p.x + r.raydx * (r.pwalld)) :
+							(w->p.y + r.raydy * (r.pwalld));
+			w->xslice -= (int)w->xslice;
 			wall_stuff(&r, w);
 		}
 		r.col--;

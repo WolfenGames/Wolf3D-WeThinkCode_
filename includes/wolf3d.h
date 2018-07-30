@@ -33,7 +33,14 @@
 # define SPACE			49
 # define NUM_PLUS		69
 # define NUM_MINUS		78
-
+typedef struct			s_tex
+{
+	void				*img;
+	unsigned int		*dat;
+	int					b;
+	int					ww;
+	int					wh;
+}						t_tex;
 typedef struct			s_ray
 {
 	int					col;
@@ -97,10 +104,12 @@ typedef struct			s_wolf
 	float				rw;
 	float				fog;
 	float				dist;
+	double				xslice;
 	t_bool				showray;
 	t_winfo				wi;
 	t_objects			**pnts;
 	t_player			p;
+	t_tex				t[5];
 }						t_wolf;
 
 void					new_image(t_wolf *w);

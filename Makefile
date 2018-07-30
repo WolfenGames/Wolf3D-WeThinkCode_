@@ -19,7 +19,7 @@ CFLAGS += -Wextra -Wall -I./includes
 ifeq ($(OS), Linux)
 	ATTACH = -L libft/ -lft -lmlx -lX11 -LXert
 else
-	ATTACH	= -L libft/ -lft -lmlx -framework OpenGL -framework AppKit
+	ATTACH = -L libft/ -lft -L miniLibX -lmlx -framework OpenGL -framework AppKit
 endif
 
 

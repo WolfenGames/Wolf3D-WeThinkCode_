@@ -13,7 +13,7 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-# include "../mlx/mlx.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
@@ -83,6 +83,8 @@ typedef struct			s_wolf
 	void				*dat;
 	double				panex;
 	double				paney;
+	double				movespeed;
+	double				rotspeed;
 	int					bpp;
 	int					sl;
 	int					endn;
@@ -110,6 +112,8 @@ void					window_init(void);
 void					error_load(t_wolf *w);
 
 int						colour_grad(int col1, int col2, float r);
+int						get_col_type(int t, t_ray *r);
+int						ray_in_map(t_ray *r, t_wolf *w);
 int						key_press_hook(int key, t_wolf *w);
 int						exit_hook(int but, t_wolf *w);
 int						draw_mini(t_wolf *w);

@@ -50,6 +50,21 @@ float	dist(t_ray a, t_ray b)
 	return (sqrt(x + y));
 }
 
+int		get_col_type(int t, t_ray *r)
+{
+	if (t == 1)
+		return ((r->side == 1) ? 0x003893 : 0xf0fAE9);
+	if (t == 2)
+		return ((r->side == 1) ? 0xF0F000 : 0xFF0000);
+	if (t == 3)
+		return ((r->side == 1) ? 0xAFAFAF : 0xAF45AE);
+	if (t == 4)
+		return ((r->side == 1) ? 0xFAFAFA : 0xBAEC16);
+	if (t == 5)
+		return ((r->side == 1) ? 0xFFFA00 : 0x7C7A00);
+	return (0xDEE0E2);
+}
+
 void	new_image(t_wolf *w)
 {
 	w->img = mlx_new_image(w->mlx, w->wi.c_w, w->wi.c_h);

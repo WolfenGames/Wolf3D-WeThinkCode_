@@ -24,7 +24,7 @@ int		expose(t_wolf *w)
 	new_image(w);
 	draw_back(w);
 	ray_test(w);
-	draw_mini(w);
+//	draw_mini(w);
 	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
 	mlx_destroy_image(w->mlx, w->img);
 	return (0);
@@ -35,9 +35,11 @@ int		update(t_wolf *w)
 	new_image(w);
 	draw_back(w);
 	ray_test(w);
-	draw_mini(w);
+//	draw_mini(w);
 	mlx_put_image_to_window(w->mlx, w->win, w->img, 0, 0);
 	mlx_destroy_image(w->mlx, w->img);
+	w->rotspeed = .2f;
+	w->movespeed = 1.f;
 	return (0);
 }
 
@@ -47,15 +49,13 @@ void	window_init(void)
 
 	w = (t_wolf *)malloc(sizeof(t_wolf));
 	w->wi.wn = "wolf3D - Win";
-	w->wi.c_h = 400;
-	w->wi.c_w = 800;
+	w->wi.c_h = 1080;
+	w->wi.c_w = 1920;
 	w->mlx = mlx_init();
 	w->win = mlx_new_window(w->mlx, w->wi.c_w, w->wi.c_h, w->wi.wn);
 	load_file("./maps/test.wolf3d", w);
 	mapify(w, &w->pnts);
-	w->wallsize = 64;
 	w->playerheight = 32;
-	w->fog = w->h * w->w;
 	w->showray = FALSE;
 	w->p.dirx = -1;
 	w->p.diry = 0;

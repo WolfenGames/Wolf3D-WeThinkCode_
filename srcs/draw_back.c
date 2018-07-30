@@ -18,7 +18,6 @@ int		draw_back(t_wolf *w)
 	int		y;
 	float	ny;
 
-	mlx_clear_window(w->mlx, w->win);
 	x = -1;
 	while (x++ < w->wi.c_w)
 	{

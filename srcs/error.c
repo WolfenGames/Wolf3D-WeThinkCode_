@@ -22,3 +22,8 @@ void		error_load(t_wolf *w)
 		i++;
 	}
 }
+
+int			ray_in_map(t_ray *r, t_wolf *w)
+{
+	return (r->mx >= 0 && r->my >= 0 && r->mx < w->h && r->my < w->w);
+}

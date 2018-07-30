@@ -14,14 +14,20 @@
 
 int		draw_mini(t_wolf *w)
 {
-	float	x;
-	float	y;
+	int		x;
+	int		y;
+	int		off;
 
-	x = (w->wi.c_w / 2.5f);
-	while (x < w->wi.c_w / 2 + (w->wi.c_w / 10))
-		put_pixel(x++, w->wi.c_h / 2, 0x000000, w);
-	y = (w->wi.c_h / 2.5f);
-	while (y < w->wi.c_h / 2 + (w->wi.c_h / 10))
-		put_pixel(w->wi.c_w / 2, y++, 0x000000, w);
-	return (0);
+	off = 30;
+	x = 0;
+	while (x < w->h)
+	{
+		y = 0;
+		while (y < w->w)
+		{
+			put_pixel(x, y, 0x000000, w);
+			y++;
+		}
+		x++;
+	}	
 }

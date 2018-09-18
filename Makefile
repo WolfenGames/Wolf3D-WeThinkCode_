@@ -60,6 +60,6 @@ re: fclean clean all
 	@echo "\033[1;31;m[Recompiled]\033[0m"
 
 run: $(NAME)
-	./$(NAME)
+	./$(NAME) maps/test.wolf3d
 
 .PHONY: fclean clean all re
